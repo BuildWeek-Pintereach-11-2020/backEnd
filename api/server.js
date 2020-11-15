@@ -3,7 +3,7 @@ const helmet = require('helmet')
 const morgan = require('morgan')
 const cors = require('cors')
 const ArtsRouter = require('../routes/arts-router.js')
-
+const AuthRouter = require('../auth/auth-router.js')
 
 const server = express()
 
@@ -12,6 +12,7 @@ server.use(helmet())
 server.use(morgan('dev'))
 server.use(cors())
 
+server.use('/api/auth', AuthRouter)
 server.use('/api/arts', ArtsRouter)
 
 // server.get('/', (req, res) => { 
