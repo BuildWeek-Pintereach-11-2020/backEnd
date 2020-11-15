@@ -32,6 +32,7 @@ router.post('/login', (req, res) => {
     const { email, password } = req.body
 
     if(isValid(req.body)){
+        console.log('jwtSecret', jwtSecret)
         Users.findBy( email )
         //returns an array with user object inside
         //must destructor the user array
@@ -60,7 +61,7 @@ function makeToken(user) {
         email: user.email 
     }
     const options = {
-        expiresIn: '2 hours',
+        expiresIn: '30 seconds',
     }
     return jwt.sign(payload, jwtSecret, options)
 }
