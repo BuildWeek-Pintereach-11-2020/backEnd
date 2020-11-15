@@ -19,7 +19,7 @@ router.post('/register', (req, res) => {
             res.status(200).json({ data: user })
         })
         .catch(err => {
-            // res.status(500).json({ message: 'issue encountered with your email or password'})
+            // res.status(500).json({ message: 'issue with your email or password'})
             res.status(500).json({ message: err.message })
         })
 
@@ -30,14 +30,12 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
     const { email, password } = req.body
-    console.log('password in req.body', password)
 
     if(isValid(req.body)){
         Users.findBy( email )
-
+        //returns an array with user object inside
+        //must destructor the user array
         .then(([user]) => {
-            console.log('user.password in db', user.password)
-            console.log('password in req.body', password)
             if(user && bcrypt.compareSync(password, user.password)) {
                 const token = makeToken(user)
                 res.status(200).json({ message: 'Welcome to our API', token })
@@ -46,6 +44,7 @@ router.post('/login', (req, res) => {
             }
         })
         .catch(err => {
+            // res.status(500).json({ message: 'issue with your email or password'})
             res.status(500).json({ message: err.message })
         })
 
