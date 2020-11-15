@@ -10,24 +10,24 @@ module.exports = {
 }
 
 async function add(newUser) {
-    const [id] = await db('news').insert(newUser, "id")
+    const [id] = await db('arts').insert(newUser, "id")
     return findById(id)
 }
 
 function findById(id) {
-    return db('news').where({id}).first()
+    return db('arts').where({id}).first()
 }
 
 function findBy(email) {
-    return db('news').where({email}).orderBy('email')
+    return db('arts').where({email}).orderBy('email')
 }
 
 async function remove(id) {
-    const deletedUser = await db('news').where({id}).delete()
+    const deletedUser = await db('arts').where({id}).delete()
     return deletedUser
 }
 
 async function update(id, changes) {
-    await db('news').where({id}).update(changes)
-    return db('news').where({id}).first()
+    await db('arts').where({id}).update(changes)
+    return db('arts').where({id}).first()
 }

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const News = require('../models/arts-model.js')
+const Arts = require('../models/arts-model.js')
 
 
 router.get('/', (req, res) => {
@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    News.add(req.body)
+    Arts.add(req.body)
     .then(art => {
         res.status(201).json({ data: art })
     })

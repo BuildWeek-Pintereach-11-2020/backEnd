@@ -1,10 +1,11 @@
 
 exports.up = function(knex) {
-  return knex.schema.createTable('news', (tbl) => {
+  return knex.schema.createTable('arts', (tbl) => {
       tbl.increments()
       tbl.string('art_name', 256).notNullable().unique()
       tbl.string('art_url').notNullable().unique()
-      tbl.integer('rating').notNullable().unique()
+      tbl.integer('rating').notNullable()
+      tbl.string('category', 128).notNullable()
       tbl.integer('users_id').notNullable()
         .unsigned()
         .notNullable()
@@ -17,5 +18,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('news')
+  return knex.schema.dropTableIfExists('arts')
 };
