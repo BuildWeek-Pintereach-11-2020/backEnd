@@ -15,7 +15,7 @@ async function add(newUser) {
 }
 
 function findById(id) {
-    return db('arts').where({id}).first()
+    return db('arts').where({'users_id': id})
 }
 
 function findBy(email) {
