@@ -2,15 +2,16 @@ const db = require('../data/dbConfig.js')
 
 module.exports = {
     add,
-    del, 
+    remove, 
     update,
     findBy,
     findById,
    
 }
 
-function add(changes) {
-    return db('users').insert(changes)
+async function add(newUser) {
+    const [id] = await db('users').insert(newUser, "id")
+    return findById(id)
 }
 
 function findById(id) {
@@ -21,7 +22,12 @@ function findBy(email) {
     return db('users').where({email}).orderBy('email')
 }
 
-async function del(id) {
-    const deletedUser = await db('users').where({id}).first()
+async function remove(id) {
+    const deletedUser = await db('users').where({id}).delete()
     return deletedUser
+}
+
+async function update(id, changes) {
+    await db('users').where({id}).update(changes)
+    return db('users').where({id}).first()
 }
