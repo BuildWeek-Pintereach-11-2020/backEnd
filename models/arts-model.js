@@ -6,6 +6,7 @@ module.exports = {
     update,
     findBy,
     findById,
+    findByCategory,
    
 }
 
@@ -15,20 +16,28 @@ async function add(newUser) {
 }
 
 function findById(id) {
-    return db('arts').where({'users_id': id})
+    return db('arts').select('id', 'art_name', 'art_url', 'rating', 'category')
+    .where({'users_id': id}).orderBy('rating', 'desc')
 }
 
+function findByCategory(id, cat) {
+    return db('arts').select('id', 'art_name', 'art_url', 'rating', 'category')
+    .where({'users_id': id, 'category': cat}).orderBy('rating', 'desc')
+}
+
+//not using this one right now
 function findBy(email) {
     return db('arts').where({email}).orderBy('email')
 }
 
 async function remove(id) {
-    const deletedArt = await db('arts').where({id})
+    const deletedArt = await db('arts').select('id', 'art_name', 'art_url', 'rating', 'category').where({id})
     await db('arts').where({id}).delete() 
     return deletedArt
 }
 
 async function update(id, changes) {
     await db('arts').where({id}).update(changes)
-    return db('arts').where({id}).first()
+    return db('arts').select('id', 'art_name', 'art_url', 'rating', 'category')
+    .where({id}).first()
 }
