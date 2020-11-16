@@ -23,8 +23,9 @@ function findBy(email) {
 }
 
 async function remove(id) {
-    const deletedUser = await db('arts').where({id}).delete()
-    return deletedUser
+    const deletedArt = await db('arts').where({id})
+    await db('arts').where({id}).delete() 
+    return deletedArt
 }
 
 async function update(id, changes) {
