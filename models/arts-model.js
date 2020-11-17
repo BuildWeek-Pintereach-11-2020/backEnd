@@ -7,12 +7,19 @@ module.exports = {
     findUserBy,
     findById,
     findByCategory,
+    findByArtId,
    
 }
 
+// add article, returns that article in array
 async function add(newArt) {
     const [id] = await db('arts').insert(newArt, "id")
-    return findById(id) 
+    return findByArtId(id) 
+}
+
+// find by id of article, returns array so I can validate length
+function findByArtId(artId) {
+    return db('arts').where({'id': artId})
 }
 
 // find by foriegn key users_id

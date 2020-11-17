@@ -12,8 +12,10 @@ router.post('/:id', (req, res) => {
 
     Arts.add(addArt)
     .then(art => {
-        if(art){
+        console.log('art!!', art)
+        if(art.length > 0){
             res.status(201).json({ message: 'Article added successfully' })
+            // res.status(201).json({ data: art })
         } else {
             res.status(400).json({ message: 'Must provide article and user id'})
         }
