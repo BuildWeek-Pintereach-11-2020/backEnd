@@ -61,7 +61,7 @@ function makeToken(user) {
         email: user.email 
     }
     const options = {
-        expiresIn: '8 hours',
+        expiresIn: '10 minutes',
     }
     return jwt.sign(payload, jwtSecret, options)
 }
