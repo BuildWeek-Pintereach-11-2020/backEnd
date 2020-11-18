@@ -16,8 +16,8 @@ server.use(cors())
 server.use('/api/auth', AuthRouter)
 server.use('/api/arts', restricted, ArtsRouter)
 
-// server.get('/', (req, res) => { 
-//     res.send("endpoint is working!")
-// })
+server.get('/', (req, res) => { 
+    res.send("endpoint is working!")
+})
 
 module.exports = server

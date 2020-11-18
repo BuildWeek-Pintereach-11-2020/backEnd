@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const { findUserBy } = require('../models/arts-model.js')
 const Arts = require('../models/arts-model.js')
 
 
@@ -22,7 +21,7 @@ router.post('/:id', (req, res) => {
     })
     .catch(err => {
         res.status(500).json({ message: 'Something went wrong' })
-        // res.status(500).json({ message: err.message })
+        res.status(500).json({ message: err.message })
     })
 })
 

@@ -4,7 +4,6 @@ module.exports = {
     add,
     remove, 
     update,
-    findUserBy,
     findById,
     findByCategory,
     findByArtId,
@@ -31,11 +30,6 @@ function findById(id) {
 function findByCategory(id, cat) {
     return db('arts').select('id', 'art_name', 'art_url', 'rating', 'category')
     .where({'users_id': id, 'category': cat}).orderBy('rating', 'desc')
-}
-
-//trying this out for Users
-function findUserBy(id) {
-    return Boolean(db('users').where({'id': id}))
 }
 
 async function remove(id) {
