@@ -8,11 +8,19 @@ const Arts = require('../models/arts-model.js')
 // returns the object of added article
 router.post('/:id', (req, res) => {
     const addArt = {...req.body, users_id: req.params.id}
+
     Arts.add(addArt)
     .then(art => {
-        res.status(201).json({ message: 'Article added successfully' })
+        console.log('art!!', art)
+        if(art.length > 0){
+            res.status(201).json({ message: 'Article added successfully' })
+            // res.status(201).json({ data: art })
+        } else {
+            res.status(400).json({ message: 'Must provide article and user id'})
+        }
     })
     .catch(err => {
+        res.status(500).json({ message: 'Something went wrong' })
         res.status(500).json({ message: err.message })
     })
 })
@@ -25,10 +33,15 @@ router.get('/:id', (req, res) => {
 
     Arts.findById(id)
     .then(arts => {
-        res.status(200).json({ data: arts })
+        if(arts.length > 0) {
+            res.status(200).json({ data: arts })
+        } else {
+            res.status(404).json({ message: 'Cannot find any results'})
+        }
     })
     .catch(err => {
-        res.status(500).json({ message: err.message })
+        res.status(500).json({ message: 'Something went wrong' })
+        // res.status(500).json({ message: err.message })
     })
 })
 
@@ -40,7 +53,11 @@ router.get('/category/:id/:category', (req, res) => {
 
     Arts.findByCategory(id, category)
     .then(arts => {
-        res.status(200).json({ data: arts })
+        if (arts.length > 0) {
+            res.status(200).json({ data: arts })  
+        } else {
+            res.status(404).json({ message: 'Cannot find any data'})
+        }
     })
     .catch(err => {
         res.status(500).json({ message: err.message })

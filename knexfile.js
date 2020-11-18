@@ -1,3 +1,5 @@
+
+
 const pgConnection = process.env.DATABASE_URL || "postgresql://postgres@localhost/api/arts";
 
 
@@ -17,6 +19,22 @@ module.exports = {
     },
   },
 
+  production: {
+    client: "pg",
+    connection: pgConnection,
+    pool: {
+      min: 2,
+      max: 10,
+    },
+    migrations: {
+      directory: "./data/migrations",
+    },
+    seeds: {
+      directory: "./data/seeds",
+    },
+    
+  },
+
   testing: {
     client: "sqlite3",
     connection: {
@@ -34,21 +52,6 @@ module.exports = {
         conn.run("PRAGMA foreign_key = ON", done);
       },
     },
-  },
-  production: {
-    client: "pg",
-    connection: pgConnection,
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      directory: "./data/migrations",
-    },
-    seeds: {
-      directory: "./data/seeds",
-    },
-    
   },
 
 };

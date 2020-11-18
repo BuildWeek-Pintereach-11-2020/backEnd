@@ -9,7 +9,7 @@ router.post('/register', (req, res) => {
     const credentials = req.body
   
     if(isValid(credentials)){
-        const rounds = process.env.BCRYPT_ROUNDS || 8
+        const rounds = parseInt(process.env.BCRYPT_ROUNDS) || 8
         const hash = bcrypt.hashSync(credentials.password, rounds)
         credentials.password = hash
         
@@ -61,7 +61,7 @@ function makeToken(user) {
         email: user.email 
     }
     const options = {
-        expiresIn: '8 hours',
+        expiresIn: '10 minutes',
     }
     return jwt.sign(payload, jwtSecret, options)
 }

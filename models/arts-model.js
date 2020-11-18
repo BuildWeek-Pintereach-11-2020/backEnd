@@ -4,30 +4,32 @@ module.exports = {
     add,
     remove, 
     update,
-    findBy,
     findById,
     findByCategory,
+    findByArtId,
    
 }
 
-async function add(newUser) {
-    const [id] = await db('arts').insert(newUser, "id")
-    return findById(id)
+// add article, returns that article in array
+async function add(newArt) {
+    const [id] = await db('arts').insert(newArt, "id")
+    return findByArtId(id) 
 }
 
-function findById(id) {
-    return db('arts').select('id', 'art_name', 'art_url', 'rating', 'category')
-    .where({'users_id': id}).orderBy('rating', 'desc')
+// find by id of article, returns array so I can validate length
+function findByArtId(artId) {
+    return db('arts').where({'id': artId})
+}
+
+// find by foriegn key users_id
+function findById(id) {  
+        return db('arts').select('id', 'art_name', 'art_url', 'rating', 'category')
+        .where({'users_id': id}).orderBy('rating', 'desc')
 }
 
 function findByCategory(id, cat) {
     return db('arts').select('id', 'art_name', 'art_url', 'rating', 'category')
     .where({'users_id': id, 'category': cat}).orderBy('rating', 'desc')
-}
-
-//not using this one right now
-function findBy(email) {
-    return db('arts').where({email}).orderBy('email')
 }
 
 async function remove(id) {
