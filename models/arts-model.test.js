@@ -39,16 +39,28 @@ describe('arts model', () => {
         })
     })
 
+    //this test destructures the array then tests the object
     describe('findeByArtId', () => {
         it('add an art and should return that art', async () => {
             await db('arts').insert({ art_name: "test", art_url: "test", rating: 5, category: "news", users_id: 1 })
             const returnedArt = await Arts.findByArtId(1)
             console.log(returnedArt)
-            expect(returnedArt[0].art_name).toBe("test")
-            //when tried to pass whole art object the error was: recieved was an array but must be a string
-            //so I destructured the array and it still wouldn't work
+            expect(returnedArt[0]).toMatchObject({ id: 1, art_name: "test", art_url: "test", rating: 5, category: "news", users_id: 1 })
+            
         })
     })
+
+    //this test leaves array as is, then compares that array to the object inside [ ]
+    describe('findeByArtId', () => {
+        it('add an art and should return that art', async () => {
+            await db('arts').insert({ art_name: "test", art_url: "test", rating: 5, category: "news", users_id: 1 })
+            const returnedArt = await Arts.findByArtId(1)
+            console.log(returnedArt)
+            expect(returnedArt).toEqual(expect.arrayContaining([{ id: 1, art_name: "test", art_url: "test", rating: 5, category: "news", users_id: 1 }]))
+            
+        })
+    })
+
 
     describe('findById, pass in a user id that matches users_id in arts table', () => {
         it('add 2 arts and should return length 2', async () => {
