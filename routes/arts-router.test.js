@@ -1,6 +1,6 @@
 const db = require("../data/dbConfig.js");
 const request = require("supertest");
-const server = require("./server.js");
+const server = require("../api/server.js");
 
 describe("test restricted arts-router", () => {
   const registerUser = {
