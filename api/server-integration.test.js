@@ -53,13 +53,42 @@ describe('test restricted arts-router', () => {
 
    })
  
-
    describe('private route [POST]', () => {
     it ('add art, returns 201', () => {
         return request(server).post('/api/arts/1').send({ art_name: "test", art_url: "test", rating: 5, category: "news" }).set('Authorization', token)
         .expect(201)     
     })
     })
+
+    describe('private route category [GET]', () => {
+        it ('no arts returns 404', async () => {
+            return request(server).get('/api/arts/category/1/music').set('Authorization', token)
+            .expect(404)
+        })
+
+        it ('add arts and returns 200', async () => {
+            await db('arts').insert({ art_name: "test", art_url: "test", rating: 5, category: "music", users_id: 1 })
+            await db('arts').insert({ art_name: "test2", art_url: "test2", rating: 4, category: "music", users_id: 1 })
+            await db('arts').insert({ art_name: "test3", art_url: "test3", rating: 3, category: "news", users_id: 1 })
+            return request(server).get('/api/arts/category/1/music').set('Authorization', token)
+            .expect(200)
+        })
+    } )
+
+    describe('restricted route [PUT]', () => {
+        it ('add art, update with bad object and expect 500', async () => {
+            await db('arts').insert({ art_name: "test", art_url: "test", rating: 5, category: "music", users_id: 1 })
+            return request(server).put('/api/arts/1').send({ }).set('Authorization', token)
+            .expect(500)
+        })
+        it ('add art, update it and expect 200', async () => {
+            await db('arts').insert({ art_name: "test", art_url: "test", rating: 5, category: "music", users_id: 1 })
+            return request(server).put('/api/arts/1').send({ art_name: "change" }).set('Authorization', token)
+            .expect(200)
+        })
+    })
+
+    
 
 
 })
