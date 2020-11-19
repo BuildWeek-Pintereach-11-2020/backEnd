@@ -1,7 +1,13 @@
 const server = require('./server.js')
 const request = require('supertest')
+const db = require('../data/dbConfig.js')
+
 
 describe('GET', () => {
+    beforeEach(async () => {
+        await db('arts').truncate()
+    })
+
     it ('has process.env.DB_ENV as "testing"', () => {
         expect(process.env.DB_ENV).toBe('testing')
     })
@@ -18,6 +24,18 @@ describe('GET', () => {
         // .expect('Content-Type', /json/)
 
     })
+
+    // it ('returns 404', () => {
+    //     return request(server).get('/api/arts/1')
+    //     .expect(404)
+        
+    // })
+
+    // it ('returns 200', () => {
+    //     return request(server).get('/api/arts/1')
+    //     .expect('Content-Type', /json/)
+    //     .expect(200)   
+    // })
 
     
 })
