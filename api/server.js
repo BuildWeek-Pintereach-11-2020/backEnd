@@ -15,6 +15,7 @@ server.use(cors())
 
 server.use('/api/auth', AuthRouter)
 server.use('/api/arts', restricted, ArtsRouter)
+// server.use('/api/arts', ArtsRouter)
 
 server.get('/', (req, res) => { 
     res.send("endpoint is working!")
