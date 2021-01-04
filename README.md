@@ -8,7 +8,4 @@ Full Site: https://pintereachsave.vercel.app/
 Back-end Developer: Brian Kubes
 
 Front-end Developers:
-Rhea Manuel
-Dave Hall
-Kyle Van Buren
-Robert Tierie
+Rhea Manuel, Dave Hall, Kyle Van Buren, Robert Tierie
